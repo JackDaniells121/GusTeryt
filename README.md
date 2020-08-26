@@ -60,6 +60,9 @@ Go to ....php file and set database connection credentials
 ## Ready to go :+1:
 Just run main php file. Simple as that :smiley:
 
+*assume that You are on local system and have localdatabase mysql
+*run script in Your browser=> localhost/GusTeryt/test.php
+
 ## Thanks To :pray:
 - :watermelon: Jakub Ujwary 
 - :green_apple: @https://github.com/gakowalski

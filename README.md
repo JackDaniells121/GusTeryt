@@ -1,5 +1,11 @@
 # :earth_africa: Poland Teryt API communication :house: :office: :hotel:
-This code is used to get API Teryt (https://api.stat.gov.pl/Home/TerytApi) data and store it into local database.
+This code is used to get API Teryt (https://api.stat.gov.pl/Home/TerytApi) data like Poland:
+- Regions
+- Districts
+- Municipals
+- Cities
+
+and store it into local database.
 
 This code use class from https://github.com/gakowalski/teryt-webservices to connect to Teryt API
 Thanks to @https://github.com/gakowalski :+1:

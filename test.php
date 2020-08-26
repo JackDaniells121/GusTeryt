@@ -8,15 +8,15 @@ class test{
     private $username = "dbuser1";
     private $password = "1234";
     private $myDB   = "teryt";
-    private $terytName = 'MaxAutoton';
-    private $terytPassword = '4dRZ9Uhzn';
+    private $terytName = 'xxx';
+    private $terytPassword = 'xxx';
     private $con;
     private $webservice;
 
 public function __construct(){
     $this->connectDB();
-    //$this->webservice = new TERYT_Webservices('TestPubliczny', '1234abcd', 'test', true);
-    $this->webservice = new TERYT_Webservices($this->$terytName, $teryt->$terytPassword, 'production', true);
+    $this->webservice = new TERYT_Webservices('TestPubliczny', '1234abcd', 'test', true);
+    //$this->webservice = new TERYT_Webservices($this->$terytName, $teryt->$terytPassword, 'production', true);
     /*$districts=[];
     $municipals=[];
     foreach($this->checkRegions() as $r)

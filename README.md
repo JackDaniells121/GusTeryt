@@ -19,7 +19,7 @@ Thanks to @https://github.com/gakowalski :+1:
 One more class was written to manage local database connection and store data from Teryt.
 
 ## :green_book: Use
-Copy files and run ...... to save files in your database
+Copy files, create database and run test.php 
 
 # :zap: Installation
 
@@ -37,7 +37,7 @@ In phpMyAdmin go to sql section and paste or use import function
 *this will create new database name teryt
 
 ## 2.Set database connection in php :unlock:
-Go to ....php file and set database connection credentials
+Go to test.php file and set database connection credentials
 ```php
     private $servername = "localhost";
     private $username = "dbuser1";
@@ -88,7 +88,7 @@ Work in progress ...but You can use
 
 
 ## Minimal working example
-Comment this lines
+Comment this lines in test.php
 
 ```php
     $this->checkMunicipalTypes();

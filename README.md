@@ -1,4 +1,4 @@
-# :earth_africa: Poland Teryt API communication :house: :office: :hotel:
+# :earth_africa: Poland Teryt API :house: :office: :hotel:
 Main goal of this little project was to get current list of all Poland Cities.
 
 This code is used to get API Teryt (https://api.stat.gov.pl/Home/TerytApi) data like Poland:

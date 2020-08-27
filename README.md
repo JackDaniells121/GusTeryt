@@ -102,7 +102,7 @@ Comment this lines in test.php
 ![Test Image 3](img/teryt_example.png)
 
 ## Errors :bug:
-Im sorry but there could be errors on Your browser - due to API requests limit, like :
+It may take ** hour **  or more to complete execution of script. Im sorry but there could be errors on Your browser - due to API requests limit, like :
 
 ```
 Notice: Undefined property: stdClass::$Miejscowosc in /Users/Apple/Documents/Vol/TerytUpdate/test.php on line 209

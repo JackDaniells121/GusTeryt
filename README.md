@@ -85,3 +85,16 @@ Work in progress ...but You can use
 - How to get Geometry of Regions, Districts, Municipals: https://capap.gugik.gov.pl/cat/org/gugik/dane/jednostki-administracyjne-f5cnk Download one file containing multiple geojson entries identified by TerytId
 
 - How get Population ? You can use Another Teryt API BDL => https://api.stat.gov.pl/Home/BdlApi
+
+
+## Minimal working example
+Comment this lines
+
+```php
+    $this->checkMunicipalTypes();
+    $this->checkCityTypes();
+```
+
+```php
+    //$this->checkCity($m['TerytId'],$m['Id']);
+```

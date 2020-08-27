@@ -29,8 +29,8 @@ Create 5 tables in your database:
 - TerytDistrict
 - TerytMunicipal
 - TerytCity
-~~- TerytMunicipalType~~
-~~- TerytCityType~~
+- TerytMunicipalType
+- TerytCityType
 
 To create use sql file create_tables.sql
 In phpMyAdmin go to sql section and paste or use import function

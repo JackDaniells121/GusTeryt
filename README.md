@@ -9,9 +9,9 @@ This code is used to get API Teryt (https://api.stat.gov.pl/Home/TerytApi) data 
 
 and store it into local database.
 
-![Test Image 1](small_img1.png)
+![Test Image 1](img/small_img1.png)
 
-![Test Image 2](small_img2.png)
+![Test Image 2](img/small_img2.png)
 
 This code use class from https://github.com/gakowalski/teryt-webservices to connect to Teryt API
 Thanks to @https://github.com/gakowalski :+1:

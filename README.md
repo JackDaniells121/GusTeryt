@@ -99,6 +99,8 @@ Comment this lines in test.php
     //$this->checkCity($m['TerytId'],$m['Id']);
 ```
 
+![Test Image 3](img/teryt_example.png)
+
 ## Errors :bug:
 Im sorry but there could be errors on Your browser - due to API requests limit, like :
 

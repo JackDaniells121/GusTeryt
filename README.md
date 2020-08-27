@@ -91,8 +91,8 @@ Work in progress ...but You can use
 Comment this lines in test.php
 
 ```php
-    $this->checkMunicipalTypes();
-    $this->checkCityTypes();
+    //$this->checkMunicipalTypes();
+    //$this->checkCityTypes();
 ```
 
 ```php

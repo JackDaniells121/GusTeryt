@@ -62,6 +62,7 @@ Go to test.php file and set database connection credentials
 ## Ready to go :+1:
 Just run main php file. Simple as that :smiley:
 
+*You can see progress in browser console
 *assume that You are on local system and have localdatabase mysql
 *run script in Your browser=> localhost/GusTeryt/test.php
 
@@ -102,7 +103,7 @@ Comment this lines in test.php
 ![Test Image 3](img/teryt_example.png)
 
 ## Errors :bug:
-It may take **hour** or more to complete execution of script. Im sorry but there could be errors on Your browser - due to API requests limit, like :
+IT MAKE TAKE **1 HOUR** or more to COMPLETE execution of script. Im sorry but there could be errors on Your browser - due to API requests limit, like :
 
 ```
 Notice: Undefined property: stdClass::$Miejscowosc in /Users/Apple/Documents/Vol/TerytUpdate/test.php on line 209

@@ -1,7 +1,7 @@
 # :earth_africa: Poland Teryt API :house: :office: :hotel:
-Main goal of this little project was to get current list of all Poland Cities.
+Main goal of this project was to get current list of all Poland Cities.
 
-This code is used to get API Teryt (https://api.stat.gov.pl/Home/TerytApi) data like Poland:
+This code is used to get data from API Teryt (https://api.stat.gov.pl/Home/TerytApi):
 - Regions       (count = 16 - state mid 2020)
 - Districts     (count = 380)
 - Municipals    (count = 3798)
@@ -24,7 +24,7 @@ Copy files, create database and run test.php
 # :zap: Installation
 
 ## 1.Database configuration :floppy_disk:
-Create 5 tables in your database: 
+Create tables in your Mysql database: 
 - TerytRegion 
 - TerytDistrict
 - TerytMunicipal
@@ -32,7 +32,7 @@ Create 5 tables in your database:
 - TerytMunicipalType
 - TerytCityType
 
-To create use sql file create_tables.sql
+Use sql file => create_tables.sql
 In phpMyAdmin go to sql section and paste or use import function
 *this will create new database name teryt
 
@@ -62,9 +62,9 @@ Go to test.php file and set database connection credentials
 ## Ready to go :+1:
 Just run main php file. Simple as that :smiley:
 
-*You can see progress in browser console
-*assume that You are on local system and have localdatabase mysql
-*run script in Your browser=> localhost/GusTeryt/test.php
+* current script progress in browser console
+* assume that You are on local system and have localdatabase mysql
+* run script in Your browser=> localhost/GusTeryt/test.php
 
 ## Thanks To :pray:
 - :watermelon: Jakub Ujwary 
@@ -79,13 +79,13 @@ Not registered users have lower request limits per minute (30?) per hour???, per
 Registered users also have limits - per minute (60?)??? 
 
 ### How to get City X,Y? or population
-Work in progress ...but You can use
+Work in progress ...but this can help:
 
-- GUIK API to get coordinates of cities and then You must convert this coordinates using l4proj library.
+- GUGIK API to get coordinates of cities and then convert this coordinates using l4proj library.
 
 - How to get Geometry of Regions, Districts, Municipals: https://capap.gugik.gov.pl/cat/org/gugik/dane/jednostki-administracyjne-f5cnk Download one file containing multiple geojson entries identified by TerytId
 
-- How get Population ? You can use Another Teryt API BDL => https://api.stat.gov.pl/Home/BdlApi
+- How get Population ? Use Another Teryt API BDL => https://api.stat.gov.pl/Home/BdlApi
 
 
 ## Minimal working example
@@ -103,7 +103,7 @@ Comment this lines in test.php
 ![Test Image 3](img/teryt_example.png)
 
 ## Errors :bug:
-IT MAKE TAKE **1 HOUR** or more to COMPLETE execution of script. Im sorry but there could be errors on Your browser - due to API requests limit, like :
+IT MAKE TAKE **1 HOUR or more to COMPLETE** execution of script. Im sorry but there could be errors on Your browser - due to API requests limit, like :
 
 ```
 Notice: Undefined property: stdClass::$Miejscowosc in /Users/Apple/Documents/Vol/TerytUpdate/test.php on line 209
@@ -111,4 +111,4 @@ object(SoapFault)#84 (9) { ["message":protected]=> string(27) "Error Fetching ht
 Notice: Undefined property: stdClass::$Miejscowosc in /Users/Apple/Documents/Vol/TerytUpdate/test.php on line 209
 ```
 
-If You have this type errors i recomend You to try more delay script or just run scipt next day
+If You have this type errors i recomend You to try more delay script or just run scipt next day/next hour

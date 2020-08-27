@@ -1,9 +1,11 @@
 # :earth_africa: Poland Teryt API communication :house: :office: :hotel:
+Main goal of this little project was to get current list of all Poland Cities.
+
 This code is used to get API Teryt (https://api.stat.gov.pl/Home/TerytApi) data like Poland:
-- Regions
-- Districts
-- Municipals
-- Cities
+- Regions       (count = 16 - state mid 2020)
+- Districts     (count = 380)
+- Municipals    (count = 3798)
+- Cities        (count = 80 k ?)
 
 and store it into local database.
 
@@ -66,3 +68,20 @@ Just run main php file. Simple as that :smiley:
 ## Thanks To :pray:
 - :watermelon: Jakub Ujwary 
 - :green_apple: @https://github.com/gakowalski
+
+## Limitations of use
+You are free to use it. Enjoy
+In code is sleep(1) function to prevent API request quota overlap, if You gain Your own API key you can experiment with disabling this limits
+
+GUS Teryt Api has limitations:
+Not registered users have lower request limits per minute (30?) per hour???, per day???
+Registered users also have limits - per minute (60?)??? 
+
+### How to get City X,Y? or population
+Work in progress ...but You can use
+
+- GUIK API to get coordinates of cities and then You must convert this coordinates using l4proj library.
+
+- How to get Geometry of Regions, Districts, Municipals: https://capap.gugik.gov.pl/cat/org/gugik/dane/jednostki-administracyjne-f5cnk Download one file containing multiple geojson entries identified by TerytId
+
+- How get Population ? You can use Another Teryt API BDL => https://api.stat.gov.pl/Home/BdlApi

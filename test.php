@@ -4,6 +4,8 @@
  https://api.stat.gov.pl/Home/TerytApi
 */
 require 'TERYT_Webservices.php';
+require 'TERYT_BDL.php';
+
 class test{
     private $servername = "localhost";
     private $username = "dbuser1";
@@ -14,41 +16,30 @@ class test{
     private $con;
     private $webservice;
     private $cities;
+    private $RegionsPopulation;
+    private $DistrictsPopulation;
+    private $MunicipalsPopulation;
+    //private $CitiesPopulation;
 
 public function __construct(){
+    set_time_limit(3600);
+    
     $this->connectDB();
     $this->webservice = new TERYT_Webservices('TestPubliczny', '1234abcd', 'test', true);
     //$this->webservice = new TERYT_Webservices($this->terytName, $this->terytPassword, 'production', true);
-    $this->cities = array_flip(array_column($this->dbGetTerytId('TerytCity'),'TerytId'));
-    $this->checkMunicipalTypes();
-    $this->checkCityTypes();
-    $districts=[];
-    $municipals=[];
-    $step=0;
+    
+    //$this->console_log($this->webservice->communes('02','08'));
+    //$this->console_log($this->webservice->towns('02','08','08','3'));
+   
+    $this->updateStructure();
 
-    foreach($this->checkRegions() as $r)
-    {
-        sleep(1);
-        $progress = round(($step++ / count($this->checkRegions()))*100);
-        $this->console_log('Current progress '.$progress.' %');
-        
-        foreach ($this->checkDistrict($r['TerytId'],$r['Id']) as $d) {  
-            sleep(1);
-            echo($d['TerytId']."<br>"); 
+    $bdl = new TerytBDL();
 
-            foreach ($this->checkMunicipal($d['TerytId'],$d['Id']) as $m) {
-                sleep(1);
-                echo($m['TerytId']."<br>");  
-                
-                //Not add cities if it is part of city/ district of city
-                if(!in_array($m['Type'],['8','9']))
-                    $this->checkCity($m['TerytId'],$m['Id']);
-            }
-        }
-        return;
-    }
-    //print_r(array_flip(array_column($this->dbGetTerytId('TerytRegion'),'TerytId')));
-    //$this->console_log($this->webservice->division_types());
+    $this->updatePopulation('TerytRegion',$bdl->getPopulationRegions());
+    $this->updatePopulation('TerytDistrict',$bdl->getPopulationDistricts());
+    $this->updatePopulation('TerytMunicipal',$bdl->getPopulationMunicipals());
+
+    $this->conn = null; 
 }
 
 public function connectDB(){
@@ -60,9 +51,36 @@ public function connectDB(){
         echo "Error: " . $e->getMessage();
     }
 }
+public function updateStructure(){
+    $this->cities = array_flip(array_column($this->dbGetTerytId('TerytCity'),'TerytId'));
+    $this->checkMunicipalTypes();
+    $this->checkCityTypes();
+    
+    $step=0;
+
+    foreach($this->checkRegions() as $r)
+    {
+        $progress = round(($step++ / count($this->checkRegions()))*100);
+        $this->console_log('Current progress '.$progress.' %');
+        
+        foreach ($this->checkDistrict($r['TerytId'],$r['Id']) as $d) {  
+            sleep(1);
+            echo($d['TerytId']."<br>"); 
+
+            foreach ($this->checkMunicipal($d['TerytId'],$d['Id']) as $m) {
+                sleep(1);
+                echo($m['TerytId']."<br>");  
+                
+                //Not add city if its a part of city or district of city
+                if(!in_array($m['Type'],['8','9']))
+                    $this->checkCity($m['TerytId'],$m['Id']);
+            }
+        }    
+    }
+}
 public function checkMunicipalTypes(){
     $result = $this->webservice->division_types();
-    $types = $this->dbGet('TerytMunicipalTypes');
+    $types = $this->dbGet('TerytMunicipalType');
     $types_found =[];
     foreach ($result as $key => $r) {
         $found=false;
@@ -74,18 +92,18 @@ public function checkMunicipalTypes(){
             }
         }
         if(!$found)
-            $this->dbInsert('TerytMunicipalTypes',[
+            $this->dbInsert('TerytMunicipalType',[
                 'Type'=>$key,
                 'Name'=>$r
                 ]); 
     }
     $types_in_db = array_values(array_column($types,'Id'));
     $to_delete = array_diff($types_in_db,$types_found);
-    $this->dbDelete('TerytMunicipalTypes', $to_delete);
+    $this->dbDelete('TerytMunicipalType', $to_delete);
 }
 public function checkCityTypes(){
     $result = $this->webservice->town_types();
-    $types = $this->dbGet('TerytCityTypes');
+    $types = $this->dbGet('TerytCityType');
     $types_found =[];
     foreach ($result as $r) {
         $found=false;
@@ -97,15 +115,16 @@ public function checkCityTypes(){
             }
         }
         if(!$found)
-            $this->dbInsert('TerytCityTypes',[
+            $this->dbInsert('TerytCityType',[
                 'Type'=>$r->Symbol,
                 'Name'=>$r->Nazwa
                 ]); 
     }
     $types_in_db = array_values(array_column($types,'Id'));
     $to_delete = array_diff($types_in_db,$types_found);
-    $this->dbDelete('TerytCityTypes', $to_delete);
+    $this->dbDelete('TerytCityType', $to_delete);
 }
+
 public function checkRegions(){
     $result = $this->webservice->provinces();
     $regions = $this->dbGet('TerytRegion');
@@ -184,6 +203,9 @@ public function checkMunicipal($DistrictTerytId,$District_Id){
                 && $mun['Type']==$r->RODZ
                 ){
                     $found = true;
+                    $this->dbUpdate('TerytMunicipal',$mun['Id'],[
+                        'Population'    =>  $this->MunicipalsPopulation[$mun['TerytId']]
+                        ]);
                     $municipals_found[]=$mun['Id'];
                     break 1;
             }
@@ -235,6 +257,24 @@ public function checkCity($MunicipalTerytId,$Municipal_Id){
         }
     }
 }
+
+public function updatePopulation($table_name,$population_array){
+    $this->console_log('Updating population '.$table_name);
+    $items = $this->dbGet($table_name);
+    
+    foreach($items as $item){
+        
+        if(!empty($population_array[$item['TerytId']])){
+
+             if($item['Population'] != $population_array[$item['TerytId']]){
+                
+                $this->dbUpdate($table_name,$item['Id'],[
+                    'Population'    =>  $population_array[$item['TerytId']]
+                    ]);
+            }
+        }    
+    }         
+}
 public function dbGet($table_name,$where=null){
     $sql="SELECT * FROM $table_name ";
     if($where)
@@ -259,7 +299,7 @@ public function dbGetTerytId($table_name,$where=null){
 }
 public function dbInsert($table_name, $values){
     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $values['DateCreated']=date('Y-m=d');
+    $values['DateCreated']=date('Y-m-d');
     $values['Id']=uniqid();
 
     $sql = "INSERT INTO $table_name (".implode(',',array_keys($values)).") VALUES (:";
@@ -275,6 +315,23 @@ public function dbInsert($table_name, $values){
         $ar[$key]=$v; 
     }
     //$this->console_log(['Insert prepared',$sql,$table_name]);
+    $stmt->execute();
+}
+public function dbUpdate($table_name, $id, $values){
+    $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $values['DateModified']=date('Y-m-d');
+    $vals='';
+    $i=0;
+    foreach($values as $key=>$v){       
+        if($i!=0)
+            $vals .=",";
+
+        $vals .=" $key='".$v."'";
+        $i++; 
+    }
+    $sql = "UPDATE $table_name SET $vals WHERE Id='$id'";
+    //$this->console_log($sql);
+    $stmt = $this->conn->prepare($sql);
     $stmt->execute();
 }
 public function dbDelete($table_name, $id){

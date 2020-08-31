@@ -66,6 +66,8 @@ Just run main php file. Simple as that :smiley:
 * assume that You are on local system and have localdatabase mysql
 * run script in Your browser=> localhost/GusTeryt/test.php
 
+
+
 ## Thanks To :pray:
 - :watermelon: Jakub Ujwary 
 - :green_apple: @https://github.com/gakowalski
@@ -81,12 +83,16 @@ Registered users also have limits - per minute (60?)???
 ### How to get City X,Y? or population
 Work in progress ...but this can help:
 
-- GUGIK API to get coordinates of cities and then convert this coordinates using l4proj library.
+- Geocoding (Coordinates) - GUGIK API (http://services.gugik.gov.pl/uug/) to get coordinates of cities and then convert this coordinates using l4proj library.
 
 - How to get Geometry of Regions, Districts, Municipals: https://capap.gugik.gov.pl/cat/org/gugik/dane/jednostki-administracyjne-f5cnk Download one file containing multiple geojson entries identified by TerytId
+    ![Test Image 1](img/Map_Preview1small.png) 
 
 - How get Population ? Use Another Teryt API BDL => https://api.stat.gov.pl/Home/BdlApi
 
+## Geocode
+To geocode City it can be used another API:
+http://services.gugik.gov.pl/uug/
 
 ## Minimal working example
 Comment this lines in test.php
